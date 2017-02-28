@@ -295,17 +295,21 @@ public class frmMain extends javax.swing.JFrame {
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         int baris = tbldata.getSelectedRow();
-        if(baris != -1){
-            String NIS = tbldata.getValueAt(baris, 0).toString();
-            String SQL = "DELETE FROM t_siswa WHERE NIS='"+NIS+"'";
-            int status = KoneksiDB.execute(SQL);
-            if(status==1){
-                JOptionPane.showMessageDialog(this, "Data berhasil dihapus", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+        int confirm = JOptionPane.showConfirmDialog(null,"Anda yakin ingin menghapus data?","Confirmation", JOptionPane.YES_NO_OPTION);
+        if (confirm == 0){
+            if(baris != -1){
+                String NIS = tbldata.getValueAt(baris, 0).toString();
+                String SQL = "DELETE FROM t_siswa WHERE NIS='"+NIS+"'";
+                int status = KoneksiDB.execute(SQL);
+                
+                if(status==1){
+                    JOptionPane.showMessageDialog(this, "Data berhasil dihapus", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Data gagal dihapus", "Gagal", JOptionPane.WARNING_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Data gagal dihapus", "Gagal", JOptionPane.WARNING_MESSAGE);
+               JOptionPane.showMessageDialog(this, "Pilih Baris Data Terlebih Dahulu", "Error", JOptionPane.WARNING_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Pilih Baris Data Terlebih Dahulu", "Error", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_deleteActionPerformed
 
